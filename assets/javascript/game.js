@@ -13,7 +13,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   	currWordArr: [],
   	guessArr: [],
   	guessStr: "",
-  	guessCount: 12,
+  	guessCount: 6,
+  	hangCount: 0,
   	gameScreen: document.querySelector('#gameScreen'),
   	gameSpace: document.querySelector('#gameSpace'),
   	guessSpace: document.querySelector('#guessSpace'),
@@ -25,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   		var num = Math.floor(Math.random() * (length - 0) + 0);
   		this.currWord = this.wordArr[num];
   		this.currWordArr = this.currWord.split('');
-  		this.guessCount = 12;
+  		this.guessCount = 6;
   		console.log(this.currWord);
   	},
 
@@ -37,9 +38,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
   		}
   		this.gameSpace.innerHTML = html;
   		this.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
-			"<p>Guesses Remaining: 12</p>";
+			"<p>Guesses Remaining: 6</p>";
   	},
 
+  	// prints guessed letters to screen
   	logGuess: function(val) {
   		this.guessArr.push(val);
   		var html = "<p>Guessed letters: " + this.guessArr.join(", ").toUpperCase() + "</p>" +
@@ -66,9 +68,18 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		badGuess: function(val) {
 			this.guessCount --;
 			this.logGuess(val);
+			this.hangTheMan();
 			if (this.guessCount === 0) {
-				this.hangTheMan();
+				this.youLose();
 			}
+		},
+
+		// updates image based on # of wrong guesses
+		// i'd like to learn how to do this with canvas / css for future update
+		hangTheMan: function() {
+			this.hangCount ++;
+			this.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-" + 
+			this.hangCount + ".png\" alt=\"Hangman-" + this.hangCount + "\">";
 		},
 
 		// word is complete: can check at the end of goodGuess if guessArr.join === word
@@ -79,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		},
 
 		// local variable that iterates for each miss
-		hangTheMan: function() {
+		youLose: function() {
 			var html = "<h1 class=\"text-center\">You Lose!!</h1>";
 			this.status.innerHTML = html;
 			this.statusBox.style.visibility = "visible";
@@ -89,6 +100,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		reset: function() {
 			game.guessArr = [];
 			game.guessStr = "";
+			game.hangCount = 0;
+			game.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-0.png\" alt=\"Hangman-0\">";
 			game.statusBox.style.visibility = "hidden";
 			game.selectWord(game.wordArr.length);
 			game.writeHTML();
@@ -96,6 +109,10 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 	};
 
+	// initial function calls to get the game rolling
+	game.selectWord(game.wordArr.length);
+	game.writeHTML();
+	
 	// onkey event
 	document.onkeyup = function(event) {
 		var userGuess = event.key;
@@ -109,10 +126,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		}
 	};
 
+	// listens for click even on resetBtn once game is finished
 	document.querySelector('#resetBtn').addEventListener('click', game.reset);
-
-	// initial function calls to get the game rolling
-	game.selectWord(game.wordArr.length);
-	game.writeHTML();
 
 });

@@ -16,6 +16,7 @@
 </head>
 <body>
 
+	<!-- basic header -->
 	<div class="container">
 		<div class="row">
 			<div class="col-md-8 col-md-offset-2">
@@ -30,21 +31,23 @@
 	<div class="container text-center">
 
 		<div class="row">
-
+			<!-- guessed letters / guesses remaning will be updated here via js -->
 			<div class="col-md-4 col-md-offset-2 text-left">
 				<div id="guessSpace">
 					
 				</div>
 			</div>
 
+			<!-- image updates via js after wrong guess -->
 			<div class="col-md-4">
 				<div id="gameScreen">
-					<img src="assets/images/hangman-placeholder.png" alt="placeholder">
+					<img src="assets/images/Hangman-0.png" alt="Hangman-0">
 				</div>
 			</div>
 
 		</div>
 
+		<!-- blanks updated via js based on length of selected word in play -->
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
 				<div id="gameSpace">
@@ -53,13 +56,12 @@
 			</div>	
 		</div>
 
-
-
+		<!-- div is revealed upon game completion, adding a message and reset button to screen -->
 		<div class="row" id="statusBox">
 			<div class="col-md-8 col-md-offset-2">
 				<div class="row">
 					<div class="col-md-12">
-						<h3 id="status">You Whatever</h1>
+						<h3 id="status">Need More Sloths!</h1>
 						</div>
 					</div>
 					<div class="row">
@@ -69,7 +71,13 @@
 					</div>
 				</div>
 			</div>
-
 		</div>
-	</body>
-	</html>
+
+		<!-- credits for used images in game - not sure if this is the best place to put something like this... -->
+		<footer class="footer text-center">
+			Image Credits: <a href="http://creativecommons.org/licenses/by-sa/3.0/" title="Creative Commons Attribution-Share Alike 3.0">CC BY-SA 3.0</a>, <a href="https://commons.wikimedia.org/w/index.php?curid=892218">Link</a>
+		</footer>
+
+	</div>
+</body>
+</html>

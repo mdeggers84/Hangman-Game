@@ -4,3 +4,18 @@ span {
 	border-bottom: solid;
 	/*background: #777;*/
 }
+
+#statusBox {
+	visibility: hidden;
+}
+
+#gameScreen img {
+	height: 200px;
+	width: auto;
+}
+
+#gameSpace {
+	padding: 5px;
+	margin-top: 10%;
+	margin-bottom: 5%;
+}

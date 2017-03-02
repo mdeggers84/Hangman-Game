@@ -4,8 +4,11 @@ document.addEventListener("DOMContentLoaded", function(event) {
   //do work
   var game = {
 
-  	// wordArr: ["dog", "cat", "mouse", "giraffe", "horse", "wolf"],
-  	wordArr: ["doooog"],
+  	wordArr: [
+  		"dog", "cat", "mouse", "giraffe", "horse", "wolf", "hippo", "dolphin", "sasquatch", "panda", "sloth", "zebra",
+  		"jackal", "lion", "parrot", "raccoon", "otter", "armadillo", "porcupine", "possum", "reindeer"
+  	],
+  	// wordArr: ["doooog"],
   	currWord: "",
   	currWordArr: [],
   	guessArr: [],
@@ -14,6 +17,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   	gameScreen: document.querySelector('#gameScreen'),
   	gameSpace: document.querySelector('#gameSpace'),
   	guessSpace: document.querySelector('#guessSpace'),
+  	status: document.querySelector('#status'),
+  	statusBox: document.querySelector('#statusBox'),
 
   	// select random word from arr
   	selectWord: function(length) {
@@ -26,19 +31,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   	// need to check lenth of word and draw blanks
   	writeHTML: function() {	
-			var html = "";
-			for (var i = 0; i < this.currWord.length; i++) {
-				html += "<span id=\"pos" + i + "\"></span>";
-			}
-			this.gameSpace.innerHTML = html;
-		},
+  		var html = "";
+  		for (var i = 0; i < this.currWord.length; i++) {
+  			html += "<span id=\"pos" + i + "\"></span>";
+  		}
+  		this.gameSpace.innerHTML = html;
+  		this.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
+			"<p>Guesses Remaining: 12</p>";
+  	},
 
-		logGuess: function(val) {
-			this.guessArr.push(val);
-			var html = "<p>Guessed letters: " + this.guessArr.join(", ").toUpperCase() + "</p>" +
-			"<p> Guesses Remaining: " + this.guessCount + "</p>";
-			this.guessSpace.innerHTML = html;
-		},
+  	logGuess: function(val) {
+  		this.guessArr.push(val);
+  		var html = "<p>Guessed letters: " + this.guessArr.join(", ").toUpperCase() + "</p>" +
+  		"<p> Guesses Remaining: " + this.guessCount + "</p>";
+  		this.guessSpace.innerHTML = html;
+  	},
 
 		// fill in the blank/s on correct guess
 		goodGuess: function(val) {
@@ -67,13 +74,24 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		// word is complete: can check at the end of goodGuess if guessArr.join === word
 		youWin: function() {
 			var html = "<h1 class=\"text-center\">You Win!!</h1>";
-			this.gameScreen.innerHTML = html;
+			this.status.innerHTML = html;
+			this.statusBox.style.visibility = "visible";
 		},
 
 		// local variable that iterates for each miss
 		hangTheMan: function() {
 			var html = "<h1 class=\"text-center\">You Lose!!</h1>";
-			this.gameScreen.innerHTML = html;
+			this.status.innerHTML = html;
+			this.statusBox.style.visibility = "visible";
+		},
+
+		// reset the game
+		reset: function() {
+			game.guessArr = [];
+			game.guessStr = "";
+			game.statusBox.style.visibility = "hidden";
+			game.selectWord(game.wordArr.length);
+			game.writeHTML();
 		}
 
 	};
@@ -90,6 +108,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			}
 		}
 	};
+
+	document.querySelector('#resetBtn').addEventListener('click', game.reset);
 
 	// initial function calls to get the game rolling
 	game.selectWord(game.wordArr.length);

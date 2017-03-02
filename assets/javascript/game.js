@@ -5,8 +5,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
   var game = {
 
   	wordArr: [
-  		"dog", "cat", "mouse", "giraffe", "horse", "wolf", "hippo", "dolphin", "sasquatch", "panda", "sloth", "zebra",
-  		"jackal", "lion", "parrot", "raccoon", "otter", "armadillo", "porcupine", "possum", "reindeer"
+  	"dog", "cat", "mouse", "giraffe", "horse", "wolf", "hippo", "dolphin", "sasquatch", "panda", "sloth", "zebra",
+  	"jackal", "lion", "parrot", "raccoon", "otter", "armadillo", "porcupine", "possum", "reindeer"
   	],
   	// wordArr: ["doooog"],
   	currWord: "",
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   	guessStr: "",
   	guessCount: 6,
   	hangCount: 0,
+  	gameOver: false,
   	gameScreen: document.querySelector('#gameScreen'),
   	gameSpace: document.querySelector('#gameSpace'),
   	guessSpace: document.querySelector('#guessSpace'),
@@ -38,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
   		}
   		this.gameSpace.innerHTML = html;
   		this.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
-			"<p>Guesses Remaining: 6</p>";
+  		"<p>Guesses Remaining: 6</p>";
   	},
 
   	// prints guessed letters to screen
@@ -84,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		// word is complete: can check at the end of goodGuess if guessArr.join === word
 		youWin: function() {
+			this.gameOver = true;
 			var html = "<h1 class=\"text-center\">You Win!!</h1>";
 			this.status.innerHTML = html;
 			this.statusBox.style.visibility = "visible";
@@ -91,6 +93,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		// local variable that iterates for each miss
 		youLose: function() {
+			this.gameOver = true;
 			var html = "<h1 class=\"text-center\">You Lose!!</h1>";
 			this.status.innerHTML = html;
 			this.statusBox.style.visibility = "visible";
@@ -98,6 +101,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		// reset the game
 		reset: function() {
+			game.gameOver = false;
 			game.guessArr = [];
 			game.guessStr = "";
 			game.hangCount = 0;
@@ -112,18 +116,20 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	// initial function calls to get the game rolling
 	game.selectWord(game.wordArr.length);
 	game.writeHTML();
-	
+
 	// onkey event
 	document.onkeyup = function(event) {
-		var userGuess = event.key;
-		var re = /^[a-z]/;
-		if (re.test(userGuess)) {
-			if (game.currWord.indexOf(userGuess) !== -1 && game.guessArr.indexOf(userGuess) === -1) {
-				game.goodGuess(userGuess);
-			} else if (game.currWord.indexOf(userGuess) === -1 && game.guessArr.indexOf(userGuess) === -1) {
-				game.badGuess(userGuess);
+		if (game.gameOver === false) {
+			var userGuess = event.key;
+			var re = /^[a-z]/;
+			if (re.test(userGuess)) {
+				if (game.currWord.indexOf(userGuess) !== -1 && game.guessArr.indexOf(userGuess) === -1) {
+					game.goodGuess(userGuess);
+				} else if (game.currWord.indexOf(userGuess) === -1 && game.guessArr.indexOf(userGuess) === -1) {
+					game.badGuess(userGuess);
+				}
 			}
-		}
+		}	
 	};
 
 	// listens for click even on resetBtn once game is finished

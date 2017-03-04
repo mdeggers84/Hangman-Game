@@ -1,6 +1,9 @@
 // was receiving null errors on querySelector, so put everything inside a function that ensures
 // that the page is loaded before executing js.
-document.addEventListener("DOMContentLoaded", function(event) { 
+
+// initially wrapped object in the following event listener, but discovered the `defer` script att
+// is one better than the other?
+// document.addEventListener("DOMContentLoaded", function(event) { 
   //do work
   var game = {
 
@@ -19,20 +22,13 @@ document.addEventListener("DOMContentLoaded", function(event) {
   	theGame: document.querySelector("#the-game"),
   	correct: document.querySelector("#correct"),
   	incorrect: document.querySelector("#incorrect"),
+  	cheer: document.querySelector("#cheer"),
   	zombie: document.querySelector("#zombie"),
   	gameScreen: document.querySelector('#gameScreen'),
   	gameSpace: document.querySelector('#gameSpace'),
   	guessSpace: document.querySelector('#guessSpace'),
   	status: document.querySelector('#status'),
   	statusBox: document.querySelector('#statusBox'),
-
-  	playCorrect: function() {
-  		this.correct.play();
-  	},
-
-  	playIncorrect: function() {
-  		this.incorrect.play();
-  	},
 
   	// select random word from arr
   	selectWord: function(length) {
@@ -66,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		// fill in the blank/s on correct guess
 		goodGuess: function(val) {
 			// document.querySelector('#pos' + index).innerHTML = this.currWord.charAt(index);
-			this.playCorrect();
+			this.correct.play();
 			this.logGuess(val);
 			for (var i = 0; i < this.currWordArr.length; i++) {
 				if (val === this.currWordArr[i]) {
@@ -82,7 +78,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		// bad guess
 		badGuess: function(val) {
-			this.playIncorrect();
+			this.incorrect.play();
 			this.guessCount --;
 			this.logGuess(val);
 			this.hangTheMan();
@@ -102,19 +98,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		// word is complete: can check at the end of goodGuess if guessArr.join === word
 		youWin: function() {
-			// for some reason, when I added the dealy, I had to change `this.theGame...` to `game.theGame...`
+			// "this" references "window" rather than the game object when I use the setTimeout function on the call
+			// game.playCheer();
+			game.cheer.play();
 			game.theGame.innerHTML = "<img src=\"assets/images/sloth.gif\" alt=\"Sloth\">";
 			var html = "<h1 class=\"text-center\">You Win!!</h1>";
-			this.status.innerHTML = html;
-			this.statusBox.style.visibility = "visible";
+			game.status.innerHTML = html;
+			game.statusBox.style.visibility = "visible";
 		},
 
 		// local variable that iterates for each miss
 		youLose: function() {
+			game.zombie.play();
 			game.theGame.innerHTML = "<img src=\"assets/images/zombie.gif\" alt=\"Sloth\">";
-			var html = "<h1 class=\"text-center\">You Lose!!</h1>";
-			this.status.innerHTML = html;
-			this.statusBox.style.visibility = "visible";
+			var html = "<h1 class=\"text-center\">You Lose!!</h1>" +
+			"<p>The answer was <span class=\"blue\">" + game.currWord + "</span>.";
+			game.status.innerHTML = html;
+			game.statusBox.style.visibility = "visible";
 		},
 
 		// reset the game -- essentially reload the page
@@ -127,6 +127,9 @@ document.addEventListener("DOMContentLoaded", function(event) {
 			// game.statusBox.style.visibility = "hidden";
 			// game.selectWord(game.wordArr.length);
 			// game.writeHTML();
+
+			// I initially reset variables / rewrote html, but decided forcing a page refresh was simpler.
+			// in the future, if I wanted to set up a tracker, I'd revert back to the previous way.
 			location.reload();
 		}
 
@@ -154,4 +157,4 @@ document.addEventListener("DOMContentLoaded", function(event) {
 	// listens for click even on resetBtn once game is finished
 	document.querySelector('#resetBtn').addEventListener('click', game.reset);
 
-});
+// });

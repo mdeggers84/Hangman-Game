@@ -4,8 +4,14 @@
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
+	<!-- link to javascript file -->
+	<!-- using the `defer` attribute to prevent js from running before page loads -->
+	<script type="text/javascript" src="assets/javascript/game.js" defer></script>
+
 	<title>Hangman</title>
 	
+	<!-- google font -->
+	<link href="https://fonts.googleapis.com/css?family=Baloo" rel="stylesheet">
 	<!-- css links -->
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
@@ -29,13 +35,16 @@
 
 		<div id="audio">
 			<audio id="correct">
-					<source src="assets/sounds/correct.mp3" type="audio/mp3">
+					<source src="assets/sounds/correct.mp3" type="audio/mpeg">
 			</audio>
 			<audio id="incorrect">
-				<source src="assets/sounds/incorrect.mp3" type="audio/mp3">
+				<source src="assets/sounds/incorrect.mp3" type="audio/mpeg">
+			</audio>
+			<audio id="cheer">
+				<source src="assets/sounds/cheer.mp3" type="audio/mpeg">
 			</audio>
 			<audio id="zombie">
-				<source src="assets/sounds/" type="">
+				<source src="assets/sounds/zombie.mp3" type="audio/mpeg">
 			</audio>
 
 		</div>
@@ -97,10 +106,6 @@
 
 	</div>
 
-	<!-- Link to howler.js for sounds -->
-	<script src="https://cdn.jsdelivr.net/howler.js/2.0.2/howler.min.js"></script>
-	<!-- link to javascript file -->
-	<script type="text/javascript" src="assets/javascript/game.js"></script>
-
+	
 </body>
 </html>

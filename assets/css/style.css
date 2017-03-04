@@ -1,4 +1,12 @@
-span {
+body {
+	font-family: 'Baloo', cursive;
+	font-size: 1.75em;
+}
+.blue {
+	color: blue;
+}
+
+#gameSpace span {
 	padding: 5px 15px;
 	margin: 0px 15px;
 	border-bottom: solid;

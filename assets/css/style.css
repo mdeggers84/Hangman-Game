@@ -28,6 +28,14 @@ body {
 	margin-bottom: 5%;
 }
 
+#win-game {
+	display: none;
+}
+
+#lose-game {
+	display: none;
+}
+
 .footer {
 	margin-top: 15px;
 }

@@ -26,6 +26,8 @@
   	zombie: document.querySelector("#zombie"),
   	gameScreen: document.querySelector('#gameScreen'),
   	gameSpace: document.querySelector('#gameSpace'),
+  	winGame: document.querySelector("#win-game"),
+  	loseGame: document.querySelector("#lose-game"),
   	guessSpace: document.querySelector('#guessSpace'),
   	status: document.querySelector('#status'),
   	statusBox: document.querySelector('#statusBox'),
@@ -99,9 +101,10 @@
 		// word is complete: can check at the end of goodGuess if guessArr.join === word
 		youWin: function() {
 			// "this" references "window" rather than the game object when I use the setTimeout function on the call
-			// game.playCheer();
 			game.cheer.play();
-			game.theGame.innerHTML = "<img src=\"assets/images/sloth.gif\" alt=\"Sloth\">";
+			// game.theGame.innerHTML = "<img src=\"assets/images/sloth.gif\" alt=\"Sloth\">";
+			game.theGame.style.display = "none";
+			game.winGame.style.display = "block";
 			var html = "<h1 class=\"text-center\">You Win!!</h1>";
 			game.status.innerHTML = html;
 			game.statusBox.style.visibility = "visible";
@@ -110,7 +113,9 @@
 		// local variable that iterates for each miss
 		youLose: function() {
 			game.zombie.play();
-			game.theGame.innerHTML = "<img src=\"assets/images/zombie.gif\" alt=\"Sloth\">";
+			// game.theGame.innerHTML = "<img src=\"assets/images/zombie.gif\" alt=\"Sloth\">";
+			game.theGame.style.display = "none";
+			game.loseGame.style.display = "block";
 			var html = "<h1 class=\"text-center\">You Lose!!</h1>" +
 			"<p>The answer was <span class=\"blue\">" + game.currWord + "</span>.";
 			game.status.innerHTML = html;

@@ -16,11 +16,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
   	guessCount: 6,
   	hangCount: 0,
   	gameOver: false,
+  	theGame: document.querySelector("#the-game"),
+  	correct: document.querySelector("#correct"),
+  	incorrect: document.querySelector("#incorrect"),
+  	zombie: document.querySelector("#zombie"),
   	gameScreen: document.querySelector('#gameScreen'),
   	gameSpace: document.querySelector('#gameSpace'),
   	guessSpace: document.querySelector('#guessSpace'),
   	status: document.querySelector('#status'),
   	statusBox: document.querySelector('#statusBox'),
+
+  	playCorrect: function() {
+  		this.correct.play();
+  	},
+
+  	playIncorrect: function() {
+  		this.incorrect.play();
+  	},
 
   	// select random word from arr
   	selectWord: function(length) {
@@ -33,11 +45,12 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
   	// need to check lenth of word and draw blanks
   	writeHTML: function() {	
-  		var html = "";
+  		// updated javascript
   		for (var i = 0; i < this.currWord.length; i++) {
-  			html += "<span id=\"pos" + i + "\"></span>";
+  			var newSpan = document.createElement("span");
+  			newSpan.setAttribute("id", "pos" + i);
+  			this.gameSpace.appendChild(newSpan);
   		}
-  		this.gameSpace.innerHTML = html;
   		this.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
   		"<p>Guesses Remaining: 6</p>";
   	},
@@ -53,6 +66,7 @@ document.addEventListener("DOMContentLoaded", function(event) {
 		// fill in the blank/s on correct guess
 		goodGuess: function(val) {
 			// document.querySelector('#pos' + index).innerHTML = this.currWord.charAt(index);
+			this.playCorrect();
 			this.logGuess(val);
 			for (var i = 0; i < this.currWordArr.length; i++) {
 				if (val === this.currWordArr[i]) {
@@ -60,18 +74,21 @@ document.addEventListener("DOMContentLoaded", function(event) {
 					this.guessStr += val;
 				}
 				if (this.guessStr.length === this.currWord.length) {
-					this.youWin();
+					this.gameOver = true;
+					setTimeout(this.youWin, 1000);
 				}
 			}
 		},
 
 		// bad guess
 		badGuess: function(val) {
+			this.playIncorrect();
 			this.guessCount --;
 			this.logGuess(val);
 			this.hangTheMan();
 			if (this.guessCount === 0) {
-				this.youLose();
+				this.gameOver = true;
+				setTimeout(this.youLose, 1000);
 			}
 		},
 
@@ -85,7 +102,8 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		// word is complete: can check at the end of goodGuess if guessArr.join === word
 		youWin: function() {
-			this.gameOver = true;
+			// for some reason, when I added the dealy, I had to change `this.theGame...` to `game.theGame...`
+			game.theGame.innerHTML = "<img src=\"assets/images/sloth.gif\" alt=\"Sloth\">";
 			var html = "<h1 class=\"text-center\">You Win!!</h1>";
 			this.status.innerHTML = html;
 			this.statusBox.style.visibility = "visible";
@@ -93,22 +111,23 @@ document.addEventListener("DOMContentLoaded", function(event) {
 
 		// local variable that iterates for each miss
 		youLose: function() {
-			this.gameOver = true;
+			game.theGame.innerHTML = "<img src=\"assets/images/zombie.gif\" alt=\"Sloth\">";
 			var html = "<h1 class=\"text-center\">You Lose!!</h1>";
 			this.status.innerHTML = html;
 			this.statusBox.style.visibility = "visible";
 		},
 
-		// reset the game
+		// reset the game -- essentially reload the page
 		reset: function() {
-			game.gameOver = false;
-			game.guessArr = [];
-			game.guessStr = "";
-			game.hangCount = 0;
-			game.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-0.png\" alt=\"Hangman-0\">";
-			game.statusBox.style.visibility = "hidden";
-			game.selectWord(game.wordArr.length);
-			game.writeHTML();
+			// game.gameOver = false;
+			// game.guessArr = [];
+			// game.guessStr = "";
+			// game.hangCount = 0;
+			// game.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-0.png\" alt=\"Hangman-0\">";
+			// game.statusBox.style.visibility = "hidden";
+			// game.selectWord(game.wordArr.length);
+			// game.writeHTML();
+			location.reload();
 		}
 
 	};

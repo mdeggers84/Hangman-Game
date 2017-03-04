@@ -32,8 +32,18 @@ body {
 	display: none;
 }
 
+#win-game img {
+	width: 350px;
+	height: auto;
+}
+
 #lose-game {
 	display: none;
+}
+
+#lose-game img {
+	width: 350px;
+	height: auto;
 }
 
 .footer {

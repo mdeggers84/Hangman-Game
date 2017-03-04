@@ -23,7 +23,7 @@
   	correct: document.querySelector("#correct"),
   	incorrect: document.querySelector("#incorrect"),
   	cheer: document.querySelector("#cheer"),
-  	zombie: document.querySelector("#zombie"),
+  	wahwah: document.querySelector("#wahwah"),
   	gameScreen: document.querySelector('#gameScreen'),
   	gameSpace: document.querySelector('#gameSpace'),
   	winGame: document.querySelector("#win-game"),
@@ -102,7 +102,6 @@
 		youWin: function() {
 			// "this" references "window" rather than the game object when I use the setTimeout function on the call
 			game.cheer.play();
-			// game.theGame.innerHTML = "<img src=\"assets/images/sloth.gif\" alt=\"Sloth\">";
 			game.theGame.style.display = "none";
 			game.winGame.style.display = "block";
 			var html = "<h1 class=\"text-center\">You Win!!</h1>";
@@ -112,8 +111,7 @@
 
 		// local variable that iterates for each miss
 		youLose: function() {
-			game.zombie.play();
-			// game.theGame.innerHTML = "<img src=\"assets/images/zombie.gif\" alt=\"Sloth\">";
+			game.wahwah.play();
 			game.theGame.style.display = "none";
 			game.loseGame.style.display = "block";
 			var html = "<h1 class=\"text-center\">You Lose!!</h1>" +
@@ -124,18 +122,26 @@
 
 		// reset the game -- essentially reload the page
 		reset: function() {
-			// game.gameOver = false;
-			// game.guessArr = [];
-			// game.guessStr = "";
-			// game.hangCount = 0;
-			// game.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-0.png\" alt=\"Hangman-0\">";
-			// game.statusBox.style.visibility = "hidden";
-			// game.selectWord(game.wordArr.length);
-			// game.writeHTML();
+			game.gameOver = false;
+			game.guessArr = [];
+			game.guessStr = "";
+			game.hangCount = 0;
+			game.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
+  		"<p> Guesses Remaining: </p>";
+			game.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-0.png\" alt=\"Hangman-0\">";
+			game.statusBox.style.visibility = "hidden";
+			game.theGame.style.display = "block";
+			game.winGame.style.display = "none";
+			game.loseGame.style.display = "none";
+			for (var i = 0; i < game.wordArr.length; i++) {
+				document.querySelector('#pos' + i).innerHTML = "";
+			}
+			game.selectWord(game.wordArr.length);
+			game.writeHTML();
 
 			// I initially reset variables / rewrote html, but decided forcing a page refresh was simpler.
 			// in the future, if I wanted to set up a tracker, I'd revert back to the previous way.
-			location.reload();
+			// location.reload();
 		}
 
 	};

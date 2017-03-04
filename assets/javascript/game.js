@@ -11,11 +11,11 @@
   	"dog", "cat", "mouse", "giraffe", "horse", "wolf", "hippo", "dolphin", "sasquatch", "panda", "sloth", "zebra",
   	"jackal", "lion", "parrot", "raccoon", "otter", "armadillo", "porcupine", "possum", "reindeer"
   	],
-  	// wordArr: ["doooog"],
   	currWord: "",
   	currWordArr: [],
   	guessArr: [],
   	guessStr: "",
+  	spaces: 0,
   	guessCount: 6,
   	hangCount: 0,
   	gameOver: false,
@@ -47,6 +47,10 @@
   		for (var i = 0; i < this.currWord.length; i++) {
   			var newSpan = document.createElement("span");
   			newSpan.setAttribute("id", "pos" + i);
+  			if (this.currWord[i] === " ") {
+  				newSpan.setAttribute("class", "no-border");
+  				this.spaces ++;
+  			}
   			this.gameSpace.appendChild(newSpan);
   		}
   		this.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
@@ -71,7 +75,7 @@
 					document.querySelector('#pos' + i).innerHTML = val;
 					this.guessStr += val;
 				}
-				if (this.guessStr.length === this.currWord.length) {
+				if (this.guessStr.length === this.currWord.length - this.spaces) {
 					this.gameOver = true;
 					setTimeout(this.youWin, 1000);
 				}
@@ -120,12 +124,14 @@
 			game.statusBox.style.visibility = "visible";
 		},
 
-		// reset the game -- essentially reload the page
+		// reset the game values / html
 		reset: function() {
+			// i'm certain there's a better way to do this...
 			game.gameOver = false;
 			game.guessArr = [];
 			game.guessStr = "";
 			game.hangCount = 0;
+			game.spaces = 0;
 			game.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
   		"<p> Guesses Remaining: </p>";
 			game.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-0.png\" alt=\"Hangman-0\">";
@@ -139,8 +145,7 @@
 			game.selectWord(game.wordArr.length);
 			game.writeHTML();
 
-			// I initially reset variables / rewrote html, but decided forcing a page refresh was simpler.
-			// in the future, if I wanted to set up a tracker, I'd revert back to the previous way.
+			// alternative reset that simply refreshes the page
 			// location.reload();
 		}
 

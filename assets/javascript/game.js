@@ -19,6 +19,15 @@
   	guessCount: 6,
   	hangCount: 0,
   	gameOver: false,
+  	imageArr: [
+  	"<img src=\"assets/images/Hangman-0.png\" alt=\"Hangman-0\">",
+  	"<img src=\"assets/images/Hangman-1.png\" alt=\"Hangman-1\">",
+  	"<img src=\"assets/images/Hangman-2.png\" alt=\"Hangman-2\">",
+  	"<img src=\"assets/images/Hangman-3.png\" alt=\"Hangman-3\">",
+  	"<img src=\"assets/images/Hangman-4.png\" alt=\"Hangman-4\">",
+  	"<img src=\"assets/images/Hangman-5.png\" alt=\"Hangman-5\">",
+  	"<img src=\"assets/images/Hangman-6.png\" alt=\"Hangman-6\">",  	
+  	],
   	theGame: document.querySelector("#the-game"),
   	correct: document.querySelector("#correct"),
   	incorrect: document.querySelector("#incorrect"),
@@ -98,8 +107,7 @@
 		// i'd like to learn how to do this with canvas / css for future update
 		hangTheMan: function() {
 			this.hangCount ++;
-			this.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-" + 
-			this.hangCount + ".png\" alt=\"Hangman-" + this.hangCount + "\">";
+			this.gameScreen.innerHTML = this.imageArr[this.hangCount];
 		},
 
 		// word is complete: can check at the end of goodGuess if guessArr.join === word
@@ -139,9 +147,10 @@
 			game.theGame.style.display = "block";
 			game.winGame.style.display = "none";
 			game.loseGame.style.display = "none";
-			for (var i = 0; i < game.wordArr.length; i++) {
-				document.querySelector('#pos' + i).innerHTML = "";
+			for (var i = 0; i < game.currWord.length; i++) {
+				document.querySelector("#pos" + i).innerHTML = "";
 			}
+			game.gameSpace.innerHTML = "";
 			game.selectWord(game.wordArr.length);
 			game.writeHTML();
 

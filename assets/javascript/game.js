@@ -17,6 +17,8 @@
   	guessStr: "",
   	spaces: 0,
   	guessCount: 6,
+  	wins: 0,
+  	losses: 0,
   	hangCount: 0,
   	gameOver: false,
   	imageArr: [
@@ -63,14 +65,18 @@
   			this.gameSpace.appendChild(newSpan);
   		}
   		this.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
-  		"<p>Guesses Remaining: 6</p>";
+  		"<p>Guesses Remaining: 6</p>" +
+  		"<p>Wins: " + this.wins + "</p>" +
+  		"<p>Losses: " + this.losses + "</p>";
   	},
 
   	// prints guessed letters to screen
   	logGuess: function(val) {
   		this.guessArr.push(val);
   		var html = "<p>Guessed letters: " + this.guessArr.join(", ").toUpperCase() + "</p>" +
-  		"<p> Guesses Remaining: " + this.guessCount + "</p>";
+  		"<p> Guesses Remaining: " + this.guessCount + "</p>" +
+  		"<p>Wins: " + this.wins + "</p>" +
+  		"<p>Losses: " + this.losses + "</p>";
   		this.guessSpace.innerHTML = html;
   	},
 
@@ -113,6 +119,7 @@
 		// word is complete: can check at the end of goodGuess if guessArr.join === word
 		youWin: function() {
 			// "this" references "window" rather than the game object when I use the setTimeout function on the call
+			game.wins ++;
 			game.cheer.play();
 			game.theGame.style.display = "none";
 			game.winGame.style.display = "block";
@@ -123,6 +130,7 @@
 
 		// local variable that iterates for each miss
 		youLose: function() {
+			game.losses ++;
 			game.wahwah.play();
 			game.theGame.style.display = "none";
 			game.loseGame.style.display = "block";
@@ -141,7 +149,9 @@
 			game.hangCount = 0;
 			game.spaces = 0;
 			game.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
-  		"<p> Guesses Remaining: </p>";
+  		"<p> Guesses Remaining: </p>" +
+  		"<p>Wins: " + this.wins + "</p>" +
+  		"<p>Losses: " + this.losses + "</p>";
 			game.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-0.png\" alt=\"Hangman-0\">";
 			game.statusBox.style.visibility = "hidden";
 			game.theGame.style.display = "block";

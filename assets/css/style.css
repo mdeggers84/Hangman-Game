@@ -1,27 +1,30 @@
 body {
-	font-family: 'Baloo', cursive;
+	font-family: 'Bungee', cursive;
 	background: #ccc;
+	background-image: url('../images/OldTV.png');
+	background-repeat: no-repeat;
+	background-position: center center;
+	background-attachment: fixed;
+	background-size:100% 80%;
+}
+
+h1 {
+	font-family: 'Bungee Shade', cursive;
 }
 
 .blue {
 	color: blue;
 }
 
-.page-header {
-	border-bottom: 3px solid #777;
-	margin-top: 20px;
-}
+#content {
+  position:absolute;
+  top:25%;
+  /*height: 80%;*/
+  left: 5%;
+  right: 10%;
+  bottom: 10%;
+  overflow:auto;
 
-.panel {
-	border: 2px solid transparent;
-}
-
-.panel-default {
-	border-color: #777;
-}
-
-.panel-heading {
-	border-bottom: 2px solid;
 }
 
 #gameSpace span {
@@ -55,7 +58,7 @@ body {
 }
 
 #win-game img {
-	width: 350px;
+	width: 250px;
 	height: auto;
 }
 
@@ -64,6 +67,6 @@ body {
 }
 
 #lose-game img {
-	width: 350px;
+	width: 250px;
 	height: auto;
 }

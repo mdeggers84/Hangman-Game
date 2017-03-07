@@ -58,7 +58,7 @@ h1 {
 }
 
 #win-game img {
-	width: 250px;
+	width: 50%;
 	height: auto;
 }
 
@@ -67,6 +67,6 @@ h1 {
 }
 
 #lose-game img {
-	width: 250px;
+	width: 50%;
 	height: auto;
 }

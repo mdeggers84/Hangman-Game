@@ -106,20 +106,21 @@ var game = {
 	},
 
 	// updates image based on # of wrong guesses
-	// i'd like to learn how to do this with canvas / css for future update
 	hangTheMan: function() {
 		this.hangCount ++;
 		this.gameScreen.innerHTML = this.imageArr[this.hangCount];
 	},
 
 	// word is complete: can check at the end of goodGuess if guessArr.join === word
+	// 'this' defaults to window, persumably due to the function call being wrapped in the setTimeout() function
+	// hence the switch to 'game.*'
 	youWin: function() {
-		// "this" references "window" rather than the game object when I use the setTimeout function on the call
+		var html = "<h1 class=\"text-center\">You Win!!</h1>";
+
 		game.wins ++;
 		game.cheer.play();
 		game.theGame.style.display = "none";
 		game.winGame.style.display = "block";
-		var html = "<h1 class=\"text-center\">You Win!!</h1>";
 		game.status.innerHTML = html;
 		game.statusBox.style.visibility = "visible";
 		setTimeout(game.reset, 3000);
@@ -127,12 +128,13 @@ var game = {
 
 	// local variable that iterates for each miss
 	youLose: function() {
+		var html = "<h1 class=\"text-center\">You Lose!!</h1>" +
+		"<p>The answer was <span class=\"blue\">" + game.currWord + "</span>.";
+		
 		game.losses ++;
 		game.wahwah.play();
 		game.theGame.style.display = "none";
 		game.loseGame.style.display = "block";
-		var html = "<h1 class=\"text-center\">You Lose!!</h1>" +
-		"<p>The answer was <span class=\"blue\">" + game.currWord + "</span>.";
 		game.status.innerHTML = html;
 		game.statusBox.style.visibility = "visible";
 		setTimeout(game.reset, 3000);

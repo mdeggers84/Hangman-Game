@@ -1,5 +1,6 @@
 body {
 	font-family: 'Bungee', cursive;
+	font-size: 18px;
 	background: #ccc;
 	background-image: url('../images/OldTV.png');
 	background-repeat: no-repeat;
@@ -18,9 +19,9 @@ h1 {
 
 #content {
   position:absolute;
-  top:25%;
+  top:18%;
   /*height: 80%;*/
-  left: 5%;
+  left: 2%;
   right: 10%;
   bottom: 10%;
   overflow:auto;
@@ -41,8 +42,7 @@ h1 {
 
 #gameSpace {
 	padding: 5px;
-	margin-top: 10%;
-	margin-bottom: 5%;
+	margin-top: 5%;
 }
 
 #gameSpace span.no-border {
@@ -58,7 +58,8 @@ h1 {
 }
 
 #win-game img {
-	width: 50%;
+	margin-top: 5%;
+	width: 35%;
 	height: auto;
 }
 
@@ -67,6 +68,7 @@ h1 {
 }
 
 #lose-game img {
-	width: 50%;
+	margin-top: 5%;
+	width: 35%;
 	height: auto;
 }

@@ -8,8 +8,10 @@
   var game = {
 
   	wordArr: [
-  	"dog", "cat", "mouse", "giraffe", "horse", "wolf", "hippo", "dolphin", "sasquatch", "panda", "sloth", "zebra",
-  	"jackal", "lion", "parrot", "raccoon", "otter", "armadillo", "porcupine", "possum", "reindeer"
+  	"Family Guy", "Rick and Morty", "Ripper Street", "The Simpsons", "Criminal Minds", "Doctor Who", "Sherlock",
+  	"Marcella", "Daredevil", "Naruto", "Jessica Jones", "The Flash", "Arrow", "Batman Beyond", "Doug", "Hey Arnold",
+  	"Luke Cage", "Murdoch Mysteries", "Republic of Doyle", "Santa Clarita Diet", "Rugrats",
+  	"Futurama"
   	],
   	currWord: "",
   	currWordArr: [],
@@ -46,7 +48,7 @@
   	// select random word from arr
   	selectWord: function(length) {
   		var num = Math.floor(Math.random() * (length - 0) + 0);
-  		this.currWord = this.wordArr[num];
+  		this.currWord = this.wordArr[num].toLowerCase();
   		this.currWordArr = this.currWord.split('');
   		this.guessCount = 6;
   		console.log(this.currWord);

@@ -24,6 +24,28 @@ body {
 	border-bottom: 2px solid;
 }
 
+#content {
+	position: absolute;
+	width: 100%;
+	height: auto;
+}
+
+#content img {
+	width: 100%;
+	height: auto;
+}
+
+#the-game {
+	position: absolute;
+  top: 20%;
+  left: 20%;
+  padding: 0;
+  /*transform: translate(-50%, -50%);*/
+  background-color: orange;
+  padding: 1.2em;
+  font-size: .5em;
+}
+
 #gameSpace span {
 	padding: 5px 10px;
 	margin: 0px 5px;

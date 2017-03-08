@@ -123,6 +123,8 @@ var game = {
 		game.winGame.style.display = "block";
 		game.status.innerHTML = html;
 		game.statusBox.style.visibility = "visible";
+
+		// resets the game after 3 seconds
 		setTimeout(game.reset, 3000);
 	},
 
@@ -137,6 +139,8 @@ var game = {
 		game.loseGame.style.display = "block";
 		game.status.innerHTML = html;
 		game.statusBox.style.visibility = "visible";
+
+		// resets the game after 3 seconds
 		setTimeout(game.reset, 3000);
 	},
 
@@ -161,6 +165,7 @@ var game = {
 			document.querySelector("#pos" + i).innerHTML = "";
 		}
 		game.gameSpace.innerHTML = "";
+
 		game.selectWord(game.wordArr.length);
 		game.writeHTML();
 

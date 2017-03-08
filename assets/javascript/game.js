@@ -188,5 +188,3 @@ document.onkeyup = function(event) {
 		}
 	}	
 };
-
-prompt();

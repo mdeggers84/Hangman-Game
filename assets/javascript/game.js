@@ -76,6 +76,7 @@ var game = {
 
 	// prints guessed letters to screen
 	logGuess: function(val) {
+		this.guessArr.push(val);
 
 		var html = "<p>Guessed letters: <br>" + 
 		this.guessArr.join(", ").toUpperCase() + "</p>" +
@@ -83,7 +84,6 @@ var game = {
 		"<p>Wins: " + this.wins + "</p>" +
 		"<p>Losses: " + this.losses + "</p>";
 
-		this.guessArr.push(val);
 		this.guessSpace.innerHTML = html;
 
 	},

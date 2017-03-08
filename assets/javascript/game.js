@@ -123,7 +123,7 @@ var game = {
 		game.winGame.style.display = "block";
 		game.status.innerHTML = html;
 		game.statusBox.style.visibility = "visible";
-		setTimeout(game.reset, 3000);
+		// setTimeout(game.reset, 3000);
 	},
 
 	// local variable that iterates for each miss
@@ -137,7 +137,7 @@ var game = {
 		game.loseGame.style.display = "block";
 		game.status.innerHTML = html;
 		game.statusBox.style.visibility = "visible";
-		setTimeout(game.reset, 3000);
+		// setTimeout(game.reset, 3000);
 	},
 
 	// reset the game values / html
@@ -188,3 +188,5 @@ document.onkeyup = function(event) {
 		}
 	}	
 };
+
+prompt();

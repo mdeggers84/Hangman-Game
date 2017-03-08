@@ -1,6 +1,7 @@
 // put as much of the game in the object as i could
 var game = {
 
+	// sets up up variables / functions as key/value pairs of the game object
 	wordArr: [
 	"Family Guy", "Rick and Morty", "Ripper Street", "The Simpsons", "Criminal Minds", "Doctor Who", "Sherlock",
 	"Marcella", "Daredevil", "Naruto", "Jessica Jones", "The Flash", "Arrow", "Batman Beyond", "Doug", "Hey Arnold",
@@ -41,46 +42,58 @@ var game = {
 
 	// select random word from arr
 	selectWord: function(length) {
+
 		var num = Math.floor(Math.random() * (length - 0) + 0);
 		this.currWord = this.wordArr[num].toLowerCase();
 		this.currWordArr = this.currWord.split('');
 		this.guessCount = 6;
-		console.log(this.currWord);
+
 	},
 
 	// need to check lenth of word and draw blanks
 	writeHTML: function() {	
-		// updated javascript
+
+		var html = "<p>Guessed letters: ...</p>" +
+		"<p>Guesses Remaining: 6</p>" +
+		"<p>Wins: " + this.wins + "</p>" +
+		"<p>Losses: " + this.losses + "</p>";
+
+		this.guessSpace.innerHTML = html;
+
 		for (var i = 0; i < this.currWord.length; i++) {
 			var newSpan = document.createElement("span");
 			newSpan.setAttribute("id", "pos" + i);
+
 			if (this.currWord[i] === " ") {
 				newSpan.setAttribute("class", "no-border");
 				this.spaces ++;
 			}
+
 			this.gameSpace.appendChild(newSpan);
 		}
-		this.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
-		"<p>Guesses Remaining: 6</p>" +
-		"<p>Wins: " + this.wins + "</p>" +
-		"<p>Losses: " + this.losses + "</p>";
+
 	},
 
 	// prints guessed letters to screen
 	logGuess: function(val) {
-		this.guessArr.push(val);
-		var html = "<p>Guessed letters: " + this.guessArr.join(", ").toUpperCase() + "</p>" +
+
+		var html = "<p>Guessed letters: <br>" + 
+		this.guessArr.join(", ").toUpperCase() + "</p>" +
 		"<p> Guesses Remaining: " + this.guessCount + "</p>" +
 		"<p>Wins: " + this.wins + "</p>" +
 		"<p>Losses: " + this.losses + "</p>";
+
+		this.guessArr.push(val);
 		this.guessSpace.innerHTML = html;
+
 	},
 
 	// fill in the blank/s on correct guess
 	goodGuess: function(val) {
-		// document.querySelector('#pos' + index).innerHTML = this.currWord.charAt(index);
+
 		this.correct.play();
 		this.logGuess(val);
+
 		for (var i = 0; i < this.currWordArr.length; i++) {
 			if (val === this.currWordArr[i]) {
 				document.querySelector('#pos' + i).innerHTML = val;
@@ -91,30 +104,39 @@ var game = {
 				setTimeout(this.youWin, 1000);
 			}
 		}
+
 	},
 
-	// bad guess
+	// detects bad guess and lowers guessCount var by one.
 	badGuess: function(val) {
+
 		this.incorrect.play();
 		this.guessCount --;
 		this.logGuess(val);
 		this.hangTheMan();
+
+		// when guessCount reaches 0 calls youLose()
 		if (this.guessCount === 0) {
 			this.gameOver = true;
 			setTimeout(this.youLose, 1000);
 		}
+
 	},
 
 	// updates image based on # of wrong guesses
 	hangTheMan: function() {
+
 		this.hangCount ++;
 		this.gameScreen.innerHTML = this.imageArr[this.hangCount];
+
 	},
 
-	// word is complete: can check at the end of goodGuess if guessArr.join === word
-	// 'this' defaults to window, persumably due to the function call being wrapped in the setTimeout() function
-	// hence the switch to 'game.*'
+
+	// 'this' defaults to window/global below, persumably due to the function call being wrapped in the setTimeout() function
+
+	// win scenario
 	youWin: function() {
+
 		var html = "<h1 class=\"text-center\">You Win!!</h1>";
 
 		game.wins ++;
@@ -126,10 +148,12 @@ var game = {
 
 		// resets the game after 3 seconds
 		setTimeout(game.reset, 3000);
+
 	},
 
-	// local variable that iterates for each miss
+	// switches to lose screen when user runs out of guesses
 	youLose: function() {
+
 		var html = "<h1 class=\"text-center\">You Lose!!</h1>" +
 		"<p>The answer was <span class=\"blue\">" + game.currWord + "</span>.";
 		
@@ -146,7 +170,6 @@ var game = {
 
 	// reset the game values / html
 	reset: function() {
-		// i'm certain there's a better way to do this...
 		game.gameOver = false;
 		game.guessArr = [];
 		game.guessStr = "";
@@ -161,16 +184,16 @@ var game = {
 		game.theGame.style.display = "block";
 		game.winGame.style.display = "none";
 		game.loseGame.style.display = "none";
+
 		for (var i = 0; i < game.currWord.length; i++) {
 			document.querySelector("#pos" + i).innerHTML = "";
 		}
+
 		game.gameSpace.innerHTML = "";
 
+		// function calls to setup new game once everything is reset
 		game.selectWord(game.wordArr.length);
 		game.writeHTML();
-
-		// alternative reset that simply refreshes the page
-		// location.reload();
 	}
 
 };
@@ -180,10 +203,15 @@ game.selectWord(game.wordArr.length);
 game.writeHTML();
 
 // onkey event
+// currently does not work with mobile devices
 document.onkeyup = function(event) {
+
+	// checks if gameOver has flagged true before accepting key input
 	if (game.gameOver === false) {
 		var userGuess = event.key;
 		var re = /^[a-z]/;
+
+		// using RegEx to only accept lowercase letters
 		if (re.test(userGuess)) {
 			if (game.currWord.indexOf(userGuess) !== -1 && game.guessArr.indexOf(userGuess) === -1) {
 				game.goodGuess(userGuess);
@@ -192,4 +220,5 @@ document.onkeyup = function(event) {
 			}
 		}
 	}	
+
 };

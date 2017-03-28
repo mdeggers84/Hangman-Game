@@ -1,3 +1,8 @@
+html {
+	min-height : 100%;
+  min-width : 100%;
+}
+
 body {
 	font-family: 'Bungee', cursive;
 	font-size: 16px;
@@ -19,12 +24,11 @@ h1 {
 
 #content {
   position:absolute;
-  top:18%;
+  top:20%;
   left: 2%;
   right: 10%;
   bottom: 10%;
   overflow:auto;
-
 }
 
 #gameSpace span {

@@ -40,13 +40,19 @@ var game = {
 	status: document.querySelector('#status'),
 	statusBox: document.querySelector('#statusBox'),
 
-	// select random word from arr
-	selectWord: function(length) {
+	// random number function
+	randomNum: function(max, min) {
+		return Math.floor(Math.random() * (max - min + 1)) + min;
+	},
 
-		var num = Math.floor(Math.random() * (length - 0) + 0);
+	// select random word from arr
+	selectWord: function() {
+
+		var num = this.randomNum(this.wordArr.length - 1, 0);
 		this.currWord = this.wordArr[num].toLowerCase();
 		this.currWordArr = this.currWord.split('');
 		this.guessCount = 6;
+		console.log(this.currWord + " index: " + num);
 
 	},
 
@@ -68,7 +74,6 @@ var game = {
 				newSpan.setAttribute("class", "no-border");
 				this.spaces ++;
 			}
-
 			this.gameSpace.appendChild(newSpan);
 		}
 
@@ -91,6 +96,7 @@ var game = {
 	// fill in the blank/s on correct guess
 	goodGuess: function(val) {
 
+		this.correct.currentTime = 0;
 		this.correct.play();
 		this.logGuess(val);
 
@@ -99,17 +105,18 @@ var game = {
 				document.querySelector('#pos' + i).innerHTML = val;
 				this.guessStr += val;
 			}
-			if (this.guessStr.length === this.currWord.length - this.spaces) {
-				this.gameOver = true;
-				setTimeout(this.youWin, 1000);
-			}
 		}
-
-	},
+		if (this.guessStr.length === this.currWord.length - this.spaces) {
+			this.gameOver = true;
+				// setTimeout(this.youWin, 1000);
+				this.youWin();
+			}
+		},
 
 	// detects bad guess and lowers guessCount var by one.
 	badGuess: function(val) {
 
+		this.incorrect.currentTime = 0;
 		this.incorrect.play();
 		this.guessCount --;
 		this.logGuess(val);
@@ -140,6 +147,7 @@ var game = {
 		var html = "<h1 class=\"text-center\">You Win!!</h1>";
 
 		game.wins ++;
+		game.cheer.currentTime = 0;
 		game.cheer.play();
 		game.theGame.style.display = "none";
 		game.winGame.style.display = "block";
@@ -147,6 +155,7 @@ var game = {
 		game.statusBox.style.visibility = "visible";
 
 		// resets the game after 3 seconds
+		game.gameOver = false;
 		setTimeout(game.reset, 3000);
 
 	},
@@ -158,6 +167,7 @@ var game = {
 		"<p>The answer was <span class=\"blue\">" + game.currWord + "</span>.";
 		
 		game.losses ++;
+		game.wahwah.currentTime = 0;
 		game.wahwah.play();
 		game.theGame.style.display = "none";
 		game.loseGame.style.display = "block";
@@ -165,41 +175,33 @@ var game = {
 		game.statusBox.style.visibility = "visible";
 
 		// resets the game after 3 seconds
+		game.gameOver = false;
 		setTimeout(game.reset, 3000);
 	},
 
 	// reset the game values / html
 	reset: function() {
-		game.gameOver = false;
+		
 		game.guessArr = [];
 		game.guessStr = "";
 		game.hangCount = 0;
 		game.spaces = 0;
-		game.guessSpace.innerHTML = "<p>Guessed letters: ...</p>" +
-		"<p> Guesses Remaining: </p>" +
-		"<p>Wins: " + this.wins + "</p>" +
-		"<p>Losses: " + this.losses + "</p>";
 		game.gameScreen.innerHTML = "<img src=\"assets/images/Hangman-0.png\" alt=\"Hangman-0\">";
 		game.statusBox.style.visibility = "hidden";
 		game.theGame.style.display = "block";
 		game.winGame.style.display = "none";
 		game.loseGame.style.display = "none";
-
-		for (var i = 0; i < game.currWord.length; i++) {
-			document.querySelector("#pos" + i).innerHTML = "";
-		}
-
 		game.gameSpace.innerHTML = "";
 
 		// function calls to setup new game once everything is reset
-		game.selectWord(game.wordArr.length);
+		game.selectWord();
 		game.writeHTML();
 	}
 
 };
 
 // initial function calls to get the game rolling
-game.selectWord(game.wordArr.length);
+game.selectWord();
 game.writeHTML();
 
 // onkey event
